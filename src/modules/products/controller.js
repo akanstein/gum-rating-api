@@ -30,9 +30,8 @@ function getMVPProduct(req, res) {
             .send({ status: false, message: "product not found" });
 
         const product = result[0];
-        product.overallRating = Number(
-          product.overallRating / product.totalReviews
-        ).toFixed(1);
+        product.overallRating =
+          Number(product.overallRating / product.totalReviews).toFixed(1) || 0;
         connection.query(
           "SELECT * FROM reviews WHERE productId=?",
           [product.id],
@@ -68,9 +67,8 @@ function getProductById(req, res) {
             .send({ status: false, message: "product not found" });
 
         const product = result[0];
-        product.overallRating = Number(
-          product.overallRating / product.totalReviews
-        ).toFixed(1);
+        product.overallRating =
+          Number(product.overallRating / product.totalReviews).toFixed(1) || 0;
         connection.query(
           "SELECT * FROM reviews WHERE productId=?",
           [product.id],
@@ -201,9 +199,10 @@ function reviewProduct(req, res) {
             }
             if (result) {
               const product = result[0];
-              product.overallRating = Number(
-                product.overallRating / product.totalReviews
-              ).toFixed(1);
+              product.overallRating =
+                Number(product.overallRating / product.totalReviews).toFixed(
+                  1
+                ) || 0;
               connection.query(
                 "SELECT * FROM reviews WHERE productId=?",
                 [productId],
